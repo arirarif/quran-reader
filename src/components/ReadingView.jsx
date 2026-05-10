@@ -25,8 +25,17 @@ export default function ReadingView({ part, isRead, onToggleRead, onBack, onNext
               {ayah.se} {ayah.sno}:{ayah.n}
             </span>
             <div className="arabic-text">{ayah.ar}</div>
-            <div className="lang-label">বাংলা</div>
+
+            {ayah.bnt && (
+              <>
+                <div className="lang-label">উচ্চারণ</div>
+                <div className="uccharon-text">{ayah.bnt}</div>
+              </>
+            )}
+
+            <div className="lang-label">অর্থ</div>
             <div className="bangla-text">{ayah.bn}</div>
+
             <div className="lang-label" style={{ marginTop: 12 }}>English</div>
             <div className="english-text">{ayah.en}</div>
           </div>
