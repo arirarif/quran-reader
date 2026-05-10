@@ -1,0 +1,22 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans Bengali', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #f0f4f1;
+  color: #1a2e1f;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  max-width: 520px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: #fff;
+  position: relative;
+}
+
+@media (max-width: 520px) {
+  #root { max-width: 100%; }
+}
