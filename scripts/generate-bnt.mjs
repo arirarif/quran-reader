@@ -37,10 +37,10 @@ const CONS = {
   'ض': 'দ',
   'ط': 'ত',
   'ظ': 'য',
-  'ع': "'",  // 'ayn → glottal mark
+  'ع': '',   // 'ayn → absorbed into following vowel (hadithbd style)
   'غ': 'গ',
   'ف': 'ফ',
-  'ق': 'ক',
+  'ق': 'ক্ব', // distinguishes from ك (ক)
   'ك': 'ক',
   'ل': 'ল',
   'م': 'ম',
@@ -210,6 +210,25 @@ function transliterate(arabic) {
     }
 
     let cons = CONS[letter] ?? '';
+
+    // Silent consonant (ع or others mapped to '') with a vowel:
+    // emit the standalone vowel letter, since vowel-signs (kars) need
+    // a base consonant to attach to.
+    if (cons === '' && vowel) {
+      const v = vowel;
+      let stand;
+      if (v === 'a')  stand = lengthen ? 'আ-' : 'আ';
+      else if (v === 'i') stand = lengthen ? 'ঈ-' : 'ই';
+      else if (v === 'u') stand = lengthen ? 'ঊ-' : 'উ';
+      else if (v === 'an') stand = 'আন';
+      else if (v === 'in') stand = 'ইন';
+      else if (v === 'un') stand = 'উন';
+      else stand = '';
+      out += stand;
+      lastWasVowelledCons = true;
+      lastVowel = v;
+      continue;
+    }
     if (!cons) { continue; }
 
     // Waw and ya act as consonants 'w' and 'y' when they carry a vowel
@@ -230,12 +249,14 @@ function transliterate(arabic) {
     // Append vowel sign / tanwin. We deliberately skip emitting halant
     // for plain sukun — Bangla Quran transliteration convention writes
     // adjacent consonants without halants (e.g. ٱلْحَمْدُ → আলহামদু).
+    // Long vowels (lengthen=true) get a trailing dash, hadithbd style:
+    // না-স, রাহী-ম, ইউলা-দ.
     if (vowel === 'a') {
-      out += 'া';
+      out += lengthen ? 'া-' : 'া';
     } else if (vowel === 'i') {
-      out += 'ি';
+      out += lengthen ? 'ী-' : 'ি';
     } else if (vowel === 'u') {
-      out += 'ু';
+      out += lengthen ? 'ূ-' : 'ু';
     } else if (vowel === 'an') {
       out += 'ান';
     } else if (vowel === 'in') {
@@ -264,10 +285,11 @@ function transliterate(arabic) {
     .replace(/আলর্র/g, 'আর্র')
     .replace(/আলশ্শ/g, 'আশ্শ')
     .replace(/আলন্ন/g, 'আন্ন')
-    // ٱللَّه pattern fallbacks
+    // ٱللَّه pattern fallbacks (word-start "Allah" without preceding আ)
     .replace(/(^|\s)ল্লাহ/g, '$1আল্লাহ')
-    .replace(/(^|\s)ল্লাহি/g, '$1আল্লাহি')
-    .replace(/(^|\s)ল্লাহু/g, '$1আল্লাহু')
+    // "Allah" always has long ā in pronunciation, even when the dagger
+    // alef ـٰ isn't written explicitly. Catches আল্লাহ, লিল্লাহ, বিল্লাহ, তাল্লাহ.
+    .replace(/ল্লাহ/g, 'ল্লা-হ')
     // Collapse triple-letter artifacts and stray double halants
     .replace(/্্+/g, '্')
     // Remove trailing halant before space or end
