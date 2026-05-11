@@ -8,13 +8,16 @@ export default function PartsList({ parts, readParts, onOpenPart, onContinue }) 
     <>
       <div className="header">
         <div className="bismillah">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
-        <h1>📖 Quran — পারা ১</h1>
-        <div className="sub">প্রতিদিন ৫ মিনিট পড়ুন</div>
+        <h1>
+          Quran Reader
+          <span className="bn-title">পারা ১ — প্রতিদিন ৫ মিনিট</span>
+        </h1>
+        <p className="sub">আলিফ লাম মীম · সূরা ফাতিহা ও সূরা বাকারা ১–১৪১</p>
       </div>
 
       <div className="progress-box">
         <div className="progress-row">
-          <span>Progress: <strong>{completed}/{total}</strong> parts</span>
+          <span>অগ্রগতি · <strong>{completed}/{total}</strong> অংশ</span>
           <strong>{pct}%</strong>
         </div>
         <div className="progress-bar">
@@ -24,12 +27,12 @@ export default function PartsList({ parts, readParts, onOpenPart, onContinue }) 
 
       {hasUnread && (
         <button className="continue-btn" onClick={onContinue}>
-          ▶ Continue Reading
+          ▶ পড়া চালিয়ে যান
         </button>
       )}
 
       {completed === total && total > 0 && (
-        <div style={{ textAlign: 'center', padding: '16px', color: '#16a34a', fontWeight: 700, fontSize: 18 }}>
+        <div className="completion-banner">
           🎉 আলহামদুলিল্লাহ! পারা ১ সম্পূর্ণ!
         </div>
       )}
@@ -40,10 +43,10 @@ export default function PartsList({ parts, readParts, onOpenPart, onContinue }) 
           return (
             <div
               key={part.id}
-              className={`part-card ${isRead ? 'read' : ''}`}
+              className={`dua-card part-card ${isRead ? 'read' : ''}`}
               onClick={() => onOpenPart(part)}
             >
-              <div className="part-num">{isRead ? '✓' : part.id}</div>
+              <div className="card-num">{isRead ? '✓' : part.id}</div>
               <div className="part-info">
                 <div className="part-title">Part {part.id}</div>
                 <div className="part-surah">

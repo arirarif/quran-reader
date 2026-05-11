@@ -13,10 +13,10 @@ export default function ReadingView({ part, isRead, onToggleRead, onBack, onNext
       <div className="reading-header">
         <button className="back-btn" onClick={onBack}>←</button>
         <div className="info">
-          <h2>Part {part.id}</h2>
+          <h2>PART {part.id}</h2>
           <span>{part.surahNames.join(' • ')} — Ayah {part.ayahRange}</span>
         </div>
-        <span className="time-badge">~5 min</span>
+        <span className="time-badge">~5 MIN</span>
       </div>
 
       <div className="reading-body" ref={bodyRef}>
@@ -27,24 +27,24 @@ export default function ReadingView({ part, isRead, onToggleRead, onBack, onNext
           </div>
         )}
         {part.ayahs.map(ayah => (
-          <div key={ayah.g} className="ayah-card">
-            <span className="ayah-badge">
-              {ayah.se} {ayah.sno}:{ayah.n}
-            </span>
-            <div className="arabic-text">{ayah.ar}</div>
+          <div key={ayah.g} className="dua-card">
+            <div className="card-header">
+              <div className="card-title">{ayah.se}</div>
+              <div className="card-ref">{ayah.sno}:{ayah.n}</div>
+            </div>
+            <div className="card-body">
+              <div className="arabic-block">{ayah.ar}</div>
 
-            {ayah.bnt && (
-              <>
-                <div className="lang-label">উচ্চারণ</div>
-                <div className="uccharon-text">{ayah.bnt}</div>
-              </>
-            )}
+              {ayah.bnt && (
+                <>
+                  <div className="uccharon-label">উচ্চারণ</div>
+                  <div className="uccharon">{ayah.bnt}</div>
+                </>
+              )}
 
-            <div className="lang-label">অর্থ</div>
-            <div className="bangla-text">{ayah.bn}</div>
-
-            <div className="lang-label" style={{ marginTop: 12 }}>English</div>
-            <div className="english-text">{ayah.en}</div>
+              <div className="ortho-label">অর্থ</div>
+              <div className="ortho">{ayah.bn}</div>
+            </div>
           </div>
         ))}
       </div>

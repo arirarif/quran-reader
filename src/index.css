@@ -1,22 +1,36 @@
+:root {
+  --gold: #c9a84c;
+  --gold-light: #e8cc7a;
+  --dark-green: #0d2b1a;
+  --mid-green: #1a4a2e;
+  --light-green: #2a6b42;
+  --cream: #f9f3e3;
+  --cream-dark: #ede3c8;
+  --maroon: #7a1f2e;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  font-family: 'Noto Sans Bengali', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background: #f0f4f1;
-  color: #1a2e1f;
+  font-family: 'Noto Serif Bengali', serif;
+  background: var(--dark-green);
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(42,107,66,0.3) 0%, transparent 50%);
+  background-attachment: fixed;
+  color: var(--cream);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
 }
 
 #root {
-  max-width: 520px;
+  max-width: 720px;
   margin: 0 auto;
   min-height: 100vh;
-  background: #fff;
   position: relative;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 720px) {
   #root { max-width: 100%; }
 }
