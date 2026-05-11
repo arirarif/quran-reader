@@ -2,7 +2,9 @@ import { useRef, useEffect } from 'react';
 
 export default function ReadingView({ part, isRead, onToggleRead, onBack, onNext, hasNext }) {
   const bodyRef = useRef(null);
-  const hasAutoUcch = part.ayahs.some(a => a.bntAuto);
+  const autoCount = part.ayahs.filter(a => a.bntAuto).length;
+  const allAuto = autoCount === part.ayahs.length;
+  const hasAutoUcch = autoCount > 0;
 
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: 0 });
@@ -22,8 +24,9 @@ export default function ReadingView({ part, isRead, onToggleRead, onBack, onNext
       <div className="reading-body" ref={bodyRef}>
         {hasAutoUcch && (
           <div className="auto-note">
-            ℹ️ উচ্চারণ স্বয়ংক্রিয়ভাবে আরবি থেকে তৈরি — তিলাওয়াতের সময়
-            অভিজ্ঞ ক্বারীর সাহায্য নিন। অর্থ: মাওলানা মুহিউদ্দীন খান।
+            ℹ️ {allAuto ? 'এই অংশের' : 'এই অংশের কিছু আয়াতের'} উচ্চারণ
+            স্বয়ংক্রিয়ভাবে আরবি থেকে তৈরি — তিলাওয়াতের সময় অভিজ্ঞ ক্বারীর
+            সাহায্য নিন। অর্থ: মাওলানা মুহিউদ্দীন খান।
           </div>
         )}
         {part.ayahs.map(ayah => (
@@ -37,7 +40,10 @@ export default function ReadingView({ part, isRead, onToggleRead, onBack, onNext
 
               {ayah.bnt && (
                 <>
-                  <div className="uccharon-label">উচ্চারণ</div>
+                  <div className="uccharon-label">
+                    উচ্চারণ
+                    {ayah.bntAuto && <span className="auto-tag">auto</span>}
+                  </div>
                   <div className="uccharon">{ayah.bnt}</div>
                 </>
               )}

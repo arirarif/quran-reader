@@ -312,6 +312,21 @@
 }
 .uccharon-label { color: var(--gold); }
 .ortho-label   { color: #90c4a0; }
+.auto-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 1px;
+  color: var(--maroon);
+  background: rgba(232,160,168,0.15);
+  border: 1px solid rgba(232,160,168,0.3);
+  padding: 1px 6px;
+  border-radius: 999px;
+  margin-left: 6px;
+  text-transform: lowercase;
+  font-style: normal;
+  font-weight: 500;
+}
+
 .uccharon-label::after,
 .ortho-label::after {
   content: '';
